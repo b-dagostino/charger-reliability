@@ -1,0 +1,15 @@
+stations:
+  overview: stations/stations_overview.csv
+reports:
+  alarms: reports/alarms/alarms.csv
+  logs:
+    access_policy: reports/logs/access_policy_logs.csv
+    pricing: reports/logs/pricing_logs.csv
+    station_activation: reports/logs/station_activation_logs.csv
+    station_config: reports/logs/station_config_logs.csv
+    station_message: reports/logs/station_message_logs.csv
+    video_ads: reports/logs/video_ad_logs.csv
+organizations:
+  summary: organizations/Organization-list-20230927.csv
+  inventory:
+    stations: organizations/inventory/org_inventory_station_all_columns-20230927.csv
