@@ -2,3 +2,5 @@
 charger_rel_env
 #data
 # Files
+.venv
+__pycache__
