@@ -1,5 +1,3 @@
-from json import dumps
-
 from s3l_utils.enum import MultiValueEnum
 
 
@@ -58,7 +56,7 @@ class AlarmEnum(MultiValueEnum):
             cls.RELAY_STUCK_CLOSE,
             cls.TAMPER_DETECT,
             cls.VENTILATION_FAULT,
-            cls.SOFT_ESTOP
+            cls.SOFT_ESTOP,
         )
 
     @classmethod
