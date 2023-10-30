@@ -3,3 +3,5 @@ networkx
 pandas
 pyyaml
 schema
+python-statemachine
+matplotlib
