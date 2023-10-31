@@ -10,8 +10,6 @@ from statemachine import State
 from statemachine.event import TransitionNotAllowed
 from statemachine.transition_list import TransitionList
 
-from .history import IHistory
-
 
 class StateMachineMetaClass(statemachine.factory.StateMachineMetaclass, ABC):
     def add_from_attributes(cls, attrs):
@@ -78,9 +76,7 @@ class HistoricalStateMachine(StateMachine):
         rtc: bool = True,
         allow_event_without_transition: bool = False,
     ):
-        super().__init__(
-            model, state_field, start_value, rtc, allow_event_without_transition
-        )
+        super().__init__(model, state_field, start_value, rtc, allow_event_without_transition)
         self._history = __class__.StateMachineHistory(self)
 
     def after_transition(self, event, state):
