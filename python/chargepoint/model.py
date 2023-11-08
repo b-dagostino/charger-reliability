@@ -57,7 +57,7 @@ class StationStatus(HistoricalStateMachine):
 
     # Fault alarms always tranistion to faulted
     for fault_alarm in AlarmEnum.faults:
-        alarms_to_transitions_map[fault_alarm] = faulted.from_(unknown, unreachable, available, occupied)
+        alarms_to_transitions_map[fault_alarm] = faulted.from_(unknown, available, occupied, unavailable, unreachable, faulted)
 
     # Fault cleared alarm transitions to available
     alarms_to_transitions_map[AlarmEnum.FAULT_CLEARED] = available.from_(
@@ -67,7 +67,7 @@ class StationStatus(HistoricalStateMachine):
     # Network status alarms
     alarms_to_transitions_map.update(
         {
-            # Unreachable alarms always transition to
+            # Unreachable alarms always transition to unreachable
             AlarmEnum.UNREACHABLE: unreachable.from_(unknown, available, unavailable, occupied, unreachable, faulted),
             # Reachable alarms transition to last known state (if enabled), otherwise return to available
             AlarmEnum.REACHABLE: unreachable.to(available, occupied, unavailable, faulted, cond="reachable_guard")
