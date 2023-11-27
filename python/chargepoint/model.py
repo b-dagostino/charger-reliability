@@ -150,6 +150,9 @@ class CircuitSharingStatus(HistoricalStateMachine):
             return False
 
 
+class ChargerSessions:
+    pass
+
 class ChargerModel:
     class ChargerState(NamedTuple):
         network_status: NetworkStatus
