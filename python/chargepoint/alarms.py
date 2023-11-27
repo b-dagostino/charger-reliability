@@ -19,8 +19,8 @@ class AlarmEnum(MultiValueEnum):
     EARTH_FAULT_STATION_OUT_OF_SERVICE = "Earth Fault Station Out Of Service"
     FAULT_CLEARED = "Fault Cleared"
     FCHECK_ERROR = "FCheck Error"
-    GFCI_HARD_TRIP = "GFCI Hard Trip"
-    GFCI_SOFT_TRIP = "GFCI Soft Trip"
+    GFCI_HARD_TRIP = "GFCI Hard Trip"  # https://en.wikipedia.org/wiki/Residual-current_device
+    GFCI_SOFT_TRIP = "GFCI Soft Trip"  # https://en.wikipedia.org/wiki/Residual-current_device
     GRACE_SESSIONS_EXCEEDED = "Grace Sessions Exceeded"
     HARDWARE_FAULT = "Hardware Fault"
     HARDWARE_FAULT_STATION_OUT_OF_SERVICE = "Hardware Fault Station Out Of Service"
@@ -49,14 +49,19 @@ class AlarmEnum(MultiValueEnum):
             cls.DATA_PARTITION_FULL,
             cls.EARTH_FAULT_STATION_IN_SERVICE,
             cls.EARTH_FAULT_STATION_OUT_OF_SERVICE,
+            cls.FCHECK_ERROR,
+            cls.GFCI_HARD_TRIP,
+            cls.GFCI_SOFT_TRIP,
             cls.HARDWARE_FAULT_STATION_OUT_OF_SERVICE,
             cls.HARDWARE_FAULT,
             cls.MAINTENANCE_REQUIRED,
+            cls.PILOT_CURRENT_LEVEL_EXCEEDED,
             cls.PILOT_UNREACHABLE,
             cls.RELAY_STUCK_CLOSE,
-            cls.TAMPER_DETECT,
-            cls.VENTILATION_FAULT,
             cls.SOFT_ESTOP,
+            cls.TAMPER_DETECT,
+            cls.VEHICLE_FAULT,
+            cls.VENTILATION_FAULT,
         )
 
     @classmethod
@@ -68,4 +73,26 @@ class AlarmEnum(MultiValueEnum):
             cls.BOOTUP_DUE_TO_SOFT_RESET,
             cls.BOOTUP_DUE_TO_SWITCH,
             cls.BOOTUP_DUE_TO_WATCHDOG,
+        )
+
+    @classmethod
+    @property
+    def informative(cls):
+        return (
+            cls.CIRCUIT_SHARING_REDUCED,
+            cls.CIRCUIT_SHARING_RESTORED,
+            cls.GRACE_SESSIONS_EXCEEDED,
+            cls.IP_MISMATCH_DETECTED,
+            cls.POWERED_OFF,
+            cls.STATION_NOT_ACTIVATED,
+            cls.UNKNOWN_RFID,
+        )
+
+    @classmethod
+    @property
+    def network(cls):
+        return (
+            cls.COMMUNICATION_TIMEOUT,
+            cls.REACHABLE,
+            cls.UNREACHABLE,
         )
