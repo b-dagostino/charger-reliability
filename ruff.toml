@@ -1,2 +1,0 @@
-line-length = 120
-extend-select = ["F", "E", "W", "I", "N", "UP", "PL", "B"]
