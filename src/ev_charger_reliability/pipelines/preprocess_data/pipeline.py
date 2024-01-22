@@ -5,7 +5,12 @@ generated using Kedro 0.19.1
 
 from kedro.pipeline import node, Pipeline, pipeline
 
-from .nodes import preprocess_station_inventory, preprocess_stations_overview, preprocess_alarms
+from .nodes import (
+    preprocess_station_inventory,
+    preprocess_stations_overview,
+    preprocess_alarms,
+    preprocess_charging_sessions,
+)
 
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -13,21 +18,27 @@ def create_pipeline(**kwargs) -> Pipeline:
         [
             node(
                 preprocess_station_inventory,
-                inputs="station_inventory",
-                outputs="preprocessed_station_inventory",
+                inputs="station_inventory_raw",
+                outputs="station_inventory_preprocessed",
                 name="preprocess_station_inventory",
             ),
             node(
                 preprocess_stations_overview,
-                inputs="stations_overview",
-                outputs="preprocessed_stations_overview",
-                name="preprocess_stations_overview"
+                inputs="stations_overview_raw",
+                outputs="stations_overview_preprocessed",
+                name="preprocess_stations_overview",
             ),
             node(
                 preprocess_alarms,
-                inputs="alarms",
-                outputs="preprocessed_alarms",
-                name="preprocess_alarms"
-            )
+                inputs="alarms_raw",
+                outputs="alarms_preprocessed",
+                name="preprocess_alarms",
+            ),
+            node(
+                preprocess_charging_sessions,
+                inputs="charging_sessions_raw",
+                outputs="charging_sessions_preprocessed",
+                name="preprocess_charging_sessions",
+            ),
         ]
     )

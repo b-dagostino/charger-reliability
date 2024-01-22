@@ -3,6 +3,7 @@ Data preprocessing pipeline for basic table cleaning, merging, and typing.
 """
 
 import logging
+from typing import Any, Callable, Dict
 
 import pandas as pd
 
@@ -30,7 +31,6 @@ def preprocess_station_inventory(station_inventory: pd.DataFrame) -> pd.DataFram
         labels=[
             "Org Name",
             "Org ID",
-            "Hardware S/N",
             "Extended Warranty S/N",
             "Warranty Description",
             "Token S/N",
@@ -51,7 +51,8 @@ def preprocess_station_inventory(station_inventory: pd.DataFrame) -> pd.DataFram
             "Station Name": "string",  # Unique, non-empty strings
             "Model Number": "category",  # Several stations share the same model number
             "MAC Address": "string",  # Unique, non-empty strings
-            "Address": "category",  # Several stations share the same address
+            "Address": "category",  # Several stations share the same address,
+            "Hardware S/N": "int64"
         }
     )
 
@@ -188,8 +189,112 @@ def preprocess_alarms(alarms: pd.DataFrame) -> pd.DataFrame:
         alarms["Alarm Time"].str.split().str[:-1].str.join(" ")
     ).dt.tz_localize("US/Pacific", ambiguous=dst_bool)
 
+    # Sort by alarm time
+
     return alarms
 
 
-# def preprocess_charging_sessions(chargin):
-#     pass
+def preprocess_charging_sessions(
+    charging_sessions: Dict[str, Callable[[], Any]]
+) -> pd.DataFrame:
+    """Concatenate, clean, and type raw charging sessions
+
+    Args:
+        charging_sessions (Dict[str, Callable[[], Any]]): Partioned raw charging sessions
+
+    Returns:
+        pd.DataFrame: Concatenated, cleaned, and typed charging sessions
+    """
+
+    # Concatenate charging sessions
+    charging_sessions: pd.DataFrame = pd.concat(
+        [f() for f in charging_sessions.values()], ignore_index=True
+    )
+
+    # Drop NaN columns
+    charging_sessions.dropna(axis=1, how="all", inplace=True)
+
+    # Sanitize column names
+    charging_sessions.rename(columns=str.strip, inplace=True)
+
+    # Start and end times
+    charging_sessions["Start Time"] = pd.to_datetime(
+        charging_sessions["Start Date"], format="mixed"
+    ).dt.tz_localize(
+        "US/Pacific", ambiguous=charging_sessions["Start Time Zone"].str.contains("ST")
+    )
+
+    charging_sessions["End Time"] = pd.to_datetime(
+        charging_sessions["End Date"], format="mixed"
+    ).dt.tz_localize(
+        "US/Pacific", ambiguous=charging_sessions["End Time Zone"].str.contains("ST")
+    )
+
+    # Drop unneeded columns
+    charging_sessions.drop(
+        labels=[
+            "Org Name",
+            "Transaction Date (Pacific Time)",
+            "Start Date",
+            "Start Time Zone",
+            "End Date",
+            "End Time Zone",
+        ],
+        axis=1,
+        inplace=True,
+    )
+
+    # Convert column types
+    charging_sessions = charging_sessions.astype(
+        {
+            "Station Name": "category",
+            "MAC Address": "category",
+            "Energy (kWh)": "float64",
+            "GHG Savings (kg)": "float64",
+            "Gasoline Savings (gallons)": "float64",
+            "Port Type": "category",
+            "Plug Type": "category",
+            "EVSE ID": "category",
+            "Address 1": "category",
+            "Address 2": "category",
+            "City": "category",
+            "State/Province": "category",
+            "Zip/Postal Code": "category",
+            "Country": "category",
+            "Latitude": "float64",
+            "Longitude": "float64",
+            "Currency": "category",
+            "Fee": "float64",
+            "Ended By": "category",
+            "Plug In Event ID": "int64",
+            "Transaction ID": "int64",
+            "Driver Zip/Postal Code": "category",
+            "User ID": "str",
+            "County": "category",
+            "System S/N": "int64",
+            "Model Number": "category"
+        }
+    )
+    charging_sessions["Port Number"] = (
+        charging_sessions["Port Number"].astype("str").astype("category")
+    )
+    charging_sessions["Total Duration (hh:mm:ss)"] = pd.to_timedelta(
+        charging_sessions["Total Duration (hh:mm:ss)"]
+    )
+    charging_sessions["Charging Time (hh:mm:ss)"] = pd.to_timedelta(
+        charging_sessions["Charging Time (hh:mm:ss)"]
+    )
+    charging_sessions["Start SOC"] = (
+        charging_sessions["Start SOC"]
+        .str.replace("%", "")
+        .astype("float")
+        .astype("category")
+    )
+    charging_sessions["End SOC"] = (
+        charging_sessions["End SOC"]
+        .str.replace("%", "")
+        .astype("float")
+        .astype("category")
+    )
+
+    return charging_sessions

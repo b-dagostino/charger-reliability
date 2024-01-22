@@ -1,19 +1,19 @@
 # Raw datasets
-station_inventory:
+station_inventory_raw:
   type: pandas.CSVDataset
   filepath: data/01_raw/organizations/inventory/org_inventory_station_all_columns-20230927.csv
   metadata:
     kedro-viz:
       layer: raw
 
-stations_overview:
+stations_overview_raw:
   type: pandas.CSVDataset
   filepath: data/01_raw/stations/stations_overview.csv
   metadata:
     kedro-viz:
       layer: raw
 
-alarms:
+alarms_raw:
   type: pandas.CSVDataset
   filepath: data/01_raw/reports/alarms/alarms.csv
   load_args:
@@ -22,17 +22,21 @@ alarms:
     kedro-viz:
       layer: raw
 
-"charging_sessions_{year}":
-  type: pandas.CSVDataset
-  filepath: data/01_raw/reports/analytics/Session-Details-Summary-{year}.csv
+charging_sessions_raw:
+  type: partitions.PartitionedDataset
+  path: data/01_raw/reports/analytics
+  dataset:
+    type: pandas.CSVDataset
+    load_args:
+      low_memory: false
   metadata:
     kedro-viz:
       layer: raw
 
 # Intermediate datasets
-"preprocessed_{dataset}":
+"{dataset}_preprocessed":
   type: pandas.ParquetDataset
-  filepath: data/02_intermediate/preprocessed_{dataset}.parquet
+  filepath: data/02_intermediate/{dataset}_preprocessed.parquet
   metadata:
     kedro-viz:
       layer: intermediate
