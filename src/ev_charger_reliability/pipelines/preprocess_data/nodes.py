@@ -190,6 +190,7 @@ def preprocess_alarms(alarms: pd.DataFrame) -> pd.DataFrame:
     ).dt.tz_localize("US/Pacific", ambiguous=dst_bool)
 
     # Sort by alarm time
+    alarms.sort_values("Alarm Time", ignore_index=True, inplace=True)
 
     return alarms
 
@@ -296,5 +297,8 @@ def preprocess_charging_sessions(
         .astype("float")
         .astype("category")
     )
+
+    # Sort by start time
+    charging_sessions.sort_values("Start Time", ignore_index=True, inplace=True)
 
     return charging_sessions
