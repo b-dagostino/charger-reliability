@@ -1,5 +1,5 @@
-"""EV Charger Reliability file for ensuring the package is executable
-as `ev-charger-reliability` and `python -m ev_charger_reliability`
+"""evsepr file for ensuring the package is executable
+as `evsepr` and `python -m evsepr`
 """
 import importlib
 from pathlib import Path

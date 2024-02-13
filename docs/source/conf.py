@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-# ev_charger_reliability documentation build
+# evsepr documentation build
 # configuration file, created by sphinx-quickstart.
 #
 # This file is execfile()d with the current directory set to its
@@ -21,11 +21,11 @@
 import re
 
 from kedro.framework.cli.utils import find_stylesheets
-from ev_charger_reliability import __version__ as release
+from evsepr import __version__ as release
 
 # -- Project information -----------------------------------------------------
 
-project = "ev_charger_reliability"
+project = "evsepr"
 author = "Kedro"
 
 # The short X.Y version.
@@ -121,7 +121,7 @@ html_show_copyright = False
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "ev_charger_reliabilitydoc"
+htmlhelp_basename = "evseprdoc"
 
 # -- Options for LaTeX output ------------------------------------------------
 
@@ -149,8 +149,8 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "ev_charger_reliability.tex",
-        "ev_charger_reliability Documentation",
+        "evsepr.tex",
+        "evsepr Documentation",
         "Kedro",
         "manual",
     )
@@ -163,8 +163,8 @@ latex_documents = [
 man_pages = [
     (
         master_doc,
-        "ev_charger_reliability",
-        "ev_charger_reliability Documentation",
+        "evsepr",
+        "evsepr Documentation",
         [author],
         1,
     )
@@ -178,11 +178,11 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "ev_charger_reliability",
-        "ev_charger_reliability Documentation",
+        "evsepr",
+        "evsepr Documentation",
         author,
-        "ev_charger_reliability",
-        "Project ev_charger_reliability codebase.",
+        "evsepr",
+        "Project evsepr codebase.",
         "Data-Science",
     )
 ]

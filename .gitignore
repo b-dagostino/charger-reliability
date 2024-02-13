@@ -17,8 +17,8 @@ data/**
 # also keep all .gitkeep files
 !.gitkeep
 
-# keep also raw data
-!data/01_raw/**
+# keep also the example dataset
+!data/01_raw/*
 
 
 ##########################
@@ -143,10 +143,14 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-.conda
 
 # mkdocs documentation
 /site
 
 # mypy
 .mypy_cache/
+
+# evsepr
+/session_store.db
+/.pdm-python
+/stats.json

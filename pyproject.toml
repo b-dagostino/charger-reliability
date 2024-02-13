@@ -1,65 +1,56 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ev_charger_reliability"
+name = "evsepr"
 readme = "README.md"
-dynamic = ["dependencies", "version"]
+dynamic = ["version",]
+description = "Default template for PDM package"
+authors = [
+    {name = "Brandon D'Agostino", email = "bdag@stanford.edu"},
+]
+dependencies = [
+    "ipython>=8.10",
+    "jupyterlab>=3.0",
+    "kedro~=0.19.2",
+    "kedro-datasets[pandas.CSVDataset, pandas.ExcelDataset, pandas.ParquetDataset]>=1.0",
+    "kedro-viz>=6.7.0",
+    "notebook"
+]
+requires-python = ">=3.11"
+license = {text = "MIT"}
 
 [project.scripts]
-ev-charger-reliability = "ev_charger_reliability.__main__:main"
+evsepr = "evsepr.__main__:main"
 
-[project.entry-points."kedro.hooks"]
-
-[project.optional-dependencies]
-docs = [
-    "docutils<0.18.0",
-    "sphinx~=3.4.3",
-    "sphinx_rtd_theme==0.5.1",
-    "nbsphinx==0.8.1",
-    "sphinx-autodoc-typehints==1.11.1",
-    "sphinx_copybutton==0.3.1",
-    "ipykernel>=5.3, <7.0",
-    "Jinja2<3.1.0",
-    "myst-parser~=0.17.2",
-]
-
-[tool.setuptools.dynamic]
-dependencies = {file = "requirements.txt"}
-version = {attr = "ev_charger_reliability.__version__"}
-
-[tool.setuptools.packages.find]
-where = ["src"]
-namespaces = false
+[tool.pdm.dev-dependencies]
+docs = [ "docutils<0.18.0", "sphinx~=3.4.3", "sphinx_rtd_theme==0.5.1", "nbsphinx==0.8.1", "sphinx-autodoc-typehints==1.11.1", "sphinx_copybutton==0.3.1", "ipykernel>=5.3, <7.0", "Jinja2<3.1.0", "myst-parser~=0.17.2",]
+lint = [ "ruff",]
+test = [ "pytest", "pytest-cov",]
 
 [tool.kedro]
-package_name = "ev_charger_reliability"
-project_name = "EV Charger Reliability"
-kedro_init_version = "0.19.1"
-tools = ['Linting', 'Testing', 'Custom Logging', 'Documentation', 'Data Structure', 'Kedro Viz']
+package_name = "evsepr"
+project_name = "evsepr"
+kedro_init_version = "0.19.2"
+tools = [ "Linting", "Custom Logging", "Documentation", "Data Structure", "Kedro Viz",]
+example_pipeline = "False"
 source_dir = "src"
-
-[tool.pytest.ini_options]
-addopts = """
---cov-report term-missing \
---cov src/ev_charger_reliability -ra"""
-
-[tool.coverage.report]
-fail_under = 0
-show_missing = true
-exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
 
 [tool.ruff]
 line-length = 88
 show-fixes = true
-select = [
-    "F",   # Pyflakes
-    "W",   # pycodestyle
-    "E",   # pycodestyle
-    "I",   # isort
-    "UP",  # pyupgrade
-    "PL",  # Pylint
-    "T201", # Print Statement
-]
-ignore = ["E501"]  # Black takes care of line-too-long
+select = [ "F", "W", "E", "I", "UP", "PL", "T201",]
+ignore = [ "E501",]
+
+[tool.pdm]
+distribution = true
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.setuptools.dynamic.version]
+attr = "evsepr.__version__"
+
+[tool.setuptools.packages.find]
+where = [ "src",]
+namespaces = false
