@@ -17,7 +17,8 @@ dependencies = [
     "kedro-datasets[pandas.CSVDataset, pandas.ExcelDataset, pandas.ParquetDataset]>=1.0",
     "kedro-viz>=6.7.0",
     "notebook",
-    "python-statemachine>=2.1.2"
+    "python-statemachine>=2.1.2",
+    "marimo"
 ]
 requires-python = ">=3.11,<3.13"
 license = {text = "MIT"}
