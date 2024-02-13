@@ -5,7 +5,7 @@
 groups = ["default", "docs", "lint", "test"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:4e5a95e58063f0e613011190fea12fb835434d0ddc5e6f3b0927e2b77794098b"
+content_hash = "sha256:90d2f997a6f6d2f32811f8549d75cc23240a3482f5513f113bc310efdc392d96"
 
 [[package]]
 name = "aiobotocore"
@@ -2124,6 +2124,17 @@ dependencies = [
 files = [
     {file = "python-slugify-8.0.4.tar.gz", hash = "sha256:59202371d1d05b54a9e7720c5e038f928f45daaffe41dd10822f3907b937c856"},
     {file = "python_slugify-8.0.4-py2.py3-none-any.whl", hash = "sha256:276540b79961052b66b7d116620b36518847f52d5fd9e3a70164fc8c50faa6b8"},
+]
+
+[[package]]
+name = "python-statemachine"
+version = "2.1.2"
+requires_python = ">=3.7,<3.13"
+summary = "Python Finite State Machines made easy."
+groups = ["default"]
+files = [
+    {file = "python_statemachine-2.1.2-py3-none-any.whl", hash = "sha256:d7e369d5da5b9007cc7cf5eb7a1b169081e2f4b7d30b6415fc122858fb7696ec"},
+    {file = "python_statemachine-2.1.2.tar.gz", hash = "sha256:0b0dd8b28738b53f14391b06d5072cd5e72259da5ae23574d3d4f5e6dd366663"},
 ]
 
 [[package]]
