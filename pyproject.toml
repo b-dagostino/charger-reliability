@@ -18,7 +18,7 @@ dependencies = [
     "kedro-viz>=6.7.0",
     "notebook",
     "python-statemachine>=2.1.2",
-    "marimo"
+    "marimo>=0.2.4",
 ]
 requires-python = ">=3.11,<3.13"
 license = {text = "MIT"}
@@ -28,8 +28,14 @@ evsepr = "evsepr.__main__:main"
 
 [tool.pdm.dev-dependencies]
 docs = [ "docutils<0.18.0", "sphinx~=3.4.3", "sphinx_rtd_theme==0.5.1", "nbsphinx==0.8.1", "sphinx-autodoc-typehints==1.11.1", "sphinx_copybutton==0.3.1", "ipykernel>=5.3, <7.0", "Jinja2<3.1.0", "myst-parser~=0.17.2",]
-lint = [ "ruff",]
-test = [ "pytest", "pytest-cov",]
+lint_format = [
+    "ruff>=0.2.1",
+    "pre-commit>=3.6.1",
+]
+test = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+]
 
 [tool.kedro]
 package_name = "evsepr"
