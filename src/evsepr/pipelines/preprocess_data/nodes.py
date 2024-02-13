@@ -3,7 +3,8 @@ Data preprocessing pipeline for basic table cleaning, merging, and typing.
 """
 
 import logging
-from typing import Any, Callable, Dict
+from collections.abc import Callable
+from typing import Any
 
 import pandas as pd
 
@@ -52,7 +53,7 @@ def preprocess_station_inventory(station_inventory: pd.DataFrame) -> pd.DataFram
             "Model Number": "category",  # Several stations share the same model number
             "MAC Address": "string",  # Unique, non-empty strings
             "Address": "category",  # Several stations share the same address,
-            "Hardware S/N": "int64"
+            "Hardware S/N": "int64",
         }
     )
 
@@ -196,7 +197,7 @@ def preprocess_alarms(alarms: pd.DataFrame) -> pd.DataFrame:
 
 
 def preprocess_charging_sessions(
-    charging_sessions: Dict[str, Callable[[], Any]]
+    charging_sessions: dict[str, Callable[[], Any]],
 ) -> pd.DataFrame:
     """Concatenate, clean, and type raw charging sessions
 
@@ -208,31 +209,33 @@ def preprocess_charging_sessions(
     """
 
     # Concatenate charging sessions
-    charging_sessions: pd.DataFrame = pd.concat(
+    charging_sessions_table: pd.DataFrame = pd.concat(
         [f() for f in charging_sessions.values()], ignore_index=True
     )
 
     # Drop NaN columns
-    charging_sessions.dropna(axis=1, how="all", inplace=True)
+    charging_sessions_table.dropna(axis=1, how="all", inplace=True)
 
     # Sanitize column names
-    charging_sessions.rename(columns=str.strip, inplace=True)
+    charging_sessions_table.rename(columns=str.strip, inplace=True)
 
     # Start and end times
-    charging_sessions["Start Time"] = pd.to_datetime(
-        charging_sessions["Start Date"], format="mixed"
+    charging_sessions_table["Start Time"] = pd.to_datetime(
+        charging_sessions_table["Start Date"], format="mixed"
     ).dt.tz_localize(
-        "US/Pacific", ambiguous=charging_sessions["Start Time Zone"].str.contains("ST")
+        "US/Pacific",
+        ambiguous=charging_sessions_table["Start Time Zone"].str.contains("ST"),
     )
 
-    charging_sessions["End Time"] = pd.to_datetime(
-        charging_sessions["End Date"], format="mixed"
+    charging_sessions_table["End Time"] = pd.to_datetime(
+        charging_sessions_table["End Date"], format="mixed"
     ).dt.tz_localize(
-        "US/Pacific", ambiguous=charging_sessions["End Time Zone"].str.contains("ST")
+        "US/Pacific",
+        ambiguous=charging_sessions_table["End Time Zone"].str.contains("ST"),
     )
 
     # Drop unneeded columns
-    charging_sessions.drop(
+    charging_sessions_table.drop(
         labels=[
             "Org Name",
             "Transaction Date (Pacific Time)",
@@ -246,7 +249,7 @@ def preprocess_charging_sessions(
     )
 
     # Convert column types
-    charging_sessions = charging_sessions.astype(
+    charging_sessions_table = charging_sessions_table.astype(
         {
             "Station Name": "category",
             "MAC Address": "category",
@@ -273,32 +276,32 @@ def preprocess_charging_sessions(
             "User ID": "str",
             "County": "category",
             "System S/N": "int64",
-            "Model Number": "category"
+            "Model Number": "category",
         }
     )
-    charging_sessions["Port Number"] = (
-        charging_sessions["Port Number"].astype("str").astype("category")
+    charging_sessions_table["Port Number"] = (
+        charging_sessions_table["Port Number"].astype("str").astype("category")
     )
-    charging_sessions["Total Duration (hh:mm:ss)"] = pd.to_timedelta(
-        charging_sessions["Total Duration (hh:mm:ss)"]
+    charging_sessions_table["Total Duration (hh:mm:ss)"] = pd.to_timedelta(
+        charging_sessions_table["Total Duration (hh:mm:ss)"]
     )
-    charging_sessions["Charging Time (hh:mm:ss)"] = pd.to_timedelta(
-        charging_sessions["Charging Time (hh:mm:ss)"]
+    charging_sessions_table["Charging Time (hh:mm:ss)"] = pd.to_timedelta(
+        charging_sessions_table["Charging Time (hh:mm:ss)"]
     )
-    charging_sessions["Start SOC"] = (
-        charging_sessions["Start SOC"]
+    charging_sessions_table["Start SOC"] = (
+        charging_sessions_table["Start SOC"]
         .str.replace("%", "")
         .astype("float")
         .astype("category")
     )
-    charging_sessions["End SOC"] = (
-        charging_sessions["End SOC"]
+    charging_sessions_table["End SOC"] = (
+        charging_sessions_table["End SOC"]
         .str.replace("%", "")
         .astype("float")
         .astype("category")
     )
 
     # Sort by start time
-    charging_sessions.sort_values("Start Time", ignore_index=True, inplace=True)
+    charging_sessions_table.sort_values("Start Time", ignore_index=True, inplace=True)
 
-    return charging_sessions
+    return charging_sessions_table
