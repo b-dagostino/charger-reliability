@@ -153,4 +153,4 @@ venv.bak/
 # evsepr
 /session_store.db
 /.pdm-python
-/stats.json
+stats.json
