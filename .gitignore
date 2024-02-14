@@ -150,9 +150,10 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-/session_store.db
-/.pdm-python
-stats.json
 .vscode
-.ruff_cache
+/.pdm-python
+/.pytest_cache
+/.ruff_cache
 /docs/source/generated
+/session_store.db
+stats.json

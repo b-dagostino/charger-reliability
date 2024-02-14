@@ -62,6 +62,7 @@ ignore = ["E501"]
 
 [tool.pdm]
 distribution = true
+
 [tool.ruff.format]
 docstring-code-format = true
 
@@ -74,3 +75,13 @@ namespaces = false
 
 [tool.pdm.scripts]
 docs = "sphinx-build -M html docs/source/ docs/build/"
+
+[tool.pytest.ini_options]
+addopts = """
+--cov-report term-missing \
+--cov src -ra"""
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
