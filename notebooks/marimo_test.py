@@ -10,6 +10,7 @@ def __():
 
     import marimo as mo
     import pandas as pd
+
     return Any, mo, pd
 
 
@@ -19,7 +20,6 @@ def __(Any, mo):
     from kedro.framework.session import KedroSession
     from kedro.io import DataCatalog
 
-
     def reload_kedro(
         path: str | None = None,
         env: str | None = None,
@@ -27,14 +27,13 @@ def __(Any, mo):
         local_namespace: dict[str, Any] | None = None,
         conf_source: str | None = None,
     ) -> tuple[KedroSession, KedroContext, DataCatalog, Any]:
+        from kedro.framework.project import pipelines
+        from kedro.framework.startup import bootstrap_project
         from kedro.ipython import (
-            _resolve_project_path,
             _remove_cached_modules,
+            _resolve_project_path,
             configure_project,
         )
-        from kedro.framework.startup import bootstrap_project
-
-        from kedro.framework.project import pipelines
 
         project_path = _resolve_project_path(None, None)
         metadata = bootstrap_project(project_path)
@@ -67,25 +66,34 @@ def __(mo, pipelines):
     datasets = set().union(*[pipeline.datasets() for pipeline in pipelines.values()])
 
     dataset_dropdown = mo.ui.dropdown(options=datasets)
-    mo.md(f"""# Kedro Dataset
-    {dataset_dropdown}""")
+    mo.md(
+        f"""# Datasets Explorer
+    Dataset: {dataset_dropdown}"""
+    )
     return dataset_dropdown, datasets
 
 
 @app.cell
-def __(catalog, dataset_dropdown, mo, pd):
+def __(catalog, dataset_dropdown):
     if dataset_dropdown.value:
         dataset_df = catalog.load(dataset_dropdown.value)
-        # convert categorical types to strings so marimo doesn't freak out
-        # dataset_df = dataset_df.astype("object").convert_dtypes()
-        with pd.option_context('display.max_rows', 100, 'display.max_columns', None): 
-            mo.output.replace(dataset_df)
-    return dataset_df,
+    return (dataset_df,)
 
 
 @app.cell
-def __():
-    return
+def __(dataset_df, dataset_dropdown, mo, pd):
+    if dataset_dropdown.value:
+        tab1 = dataset_df
+        tab2 = "\n".join([f"- {column}" for column in sorted(dataset_df.columns)])
+
+        # with pd.option_context('display.max_rows', 100, 'display.max_columns', None):
+        #         mo.output.replace(mo.ui.tabs({
+        #     "Dataframe": tab1,
+        #     "Columns": tab2
+        # }))
+        with pd.option_context("display.max_rows", 100, "display.max_columns", None):
+            mo.output.replace(mo.accordion({"Dataframe": tab1, "Columns": tab2}))
+    return tab1, tab2
 
 
 if __name__ == "__main__":
