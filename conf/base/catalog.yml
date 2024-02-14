@@ -43,9 +43,9 @@ charging_sessions_raw:
       layer: intermediate
 
 # Primary datasets
-stations_primary:
+unique_stations:
   type: pandas.ParquetDataset
-  filepath: data/03_primary/stations.parquet
+  filepath: data/03_primary/unique_stations.parquet
   metadata:
     kedro-viz:
       layer: primary

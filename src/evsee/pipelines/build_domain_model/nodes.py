@@ -9,7 +9,7 @@ import pandas as pd
 def find_unique_stations(*inputs: list[pd.DataFrame]) -> pd.DataFrame:
     """
     Find unique stations (according to station MAC address) across all data
-    (i.e., station overview, station inventory, alarms, charging sessions)
+    (i.e., station overview, station inventory, alarms, charging sessions).
 
     Returns:
         pd.DataFrame: Dataframe containing all unique station MAC address.
