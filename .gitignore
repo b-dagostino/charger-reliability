@@ -155,3 +155,4 @@ venv.bak/
 stats.json
 .vscode
 .ruff_cache
+/docs/source/generated

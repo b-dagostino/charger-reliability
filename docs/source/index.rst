@@ -5,7 +5,9 @@ An operator-First EV Charging Performance Reporting Framework.
 .. toctree::
    :maxdepth: 4
 
-   modules
+   introduction
+   design_decisions
+   api
 
 
 Indices and tables

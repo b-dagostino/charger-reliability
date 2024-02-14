@@ -54,6 +54,7 @@ extensions = [
     "nbsphinx",
     "sphinx_copybutton",
     "myst_parser",
+    "sphinx.ext.autosummary",
 ]
 
 # enable autosummary plugin (table of contents for modules/classes/class
@@ -80,6 +81,8 @@ exclude_patterns = ["_build", "**.ipynb_checkpoints"]
 pygments_style = "sphinx"
 
 # -- Options for HTML output -------------------------------------------------
+
+html_title = f"EVSEe {version}"
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
