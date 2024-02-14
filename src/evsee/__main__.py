@@ -1,5 +1,5 @@
-"""evsepr file for ensuring the package is executable
-as `evsepr` and `python -m evsepr`
+"""evsee file for ensuring the package is executable
+as `evsee` and `python -m evsee`
 """
 import importlib
 from pathlib import Path

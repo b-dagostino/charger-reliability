@@ -19,25 +19,25 @@ def create_pipeline(**kwargs) -> Pipeline:
             node(
                 preprocess_station_inventory,
                 inputs="station_inventory_raw",
-                outputs="station_inventory_preprocessed",
+                outputs="station_inventory_typed",
                 name="preprocess_station_inventory",
             ),
             node(
                 preprocess_stations_overview,
                 inputs="stations_overview_raw",
-                outputs="stations_overview_preprocessed",
+                outputs="stations_overview_typed",
                 name="preprocess_stations_overview",
             ),
             node(
                 preprocess_alarms,
                 inputs="alarms_raw",
-                outputs="alarms_preprocessed",
+                outputs="alarms_typed",
                 name="preprocess_alarms",
             ),
             node(
                 preprocess_charging_sessions,
                 inputs="charging_sessions_raw",
-                outputs="charging_sessions_preprocessed",
+                outputs="charging_sessions_typed",
                 name="preprocess_charging_sessions",
             ),
         ]
