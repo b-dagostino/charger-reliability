@@ -6,5 +6,7 @@ repos:
     # Run the linter.
     - id: ruff
       args: [--select, I, --fix]
+      exclude: ^notebooks/.*
     # Run the formatter.
     - id: ruff-format
+      exclude: ^notebooks/.*
