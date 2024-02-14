@@ -153,3 +153,5 @@ venv.bak/
 /session_store.db
 /.pdm-python
 stats.json
+.vscode
+.ruff_cache
