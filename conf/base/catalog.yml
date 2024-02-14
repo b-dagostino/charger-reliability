@@ -3,6 +3,7 @@ station_inventory_raw:
   type: pandas.CSVDataset
   filepath: data/01_raw/organizations/inventory/org_inventory_station_all_columns-20230927.csv
   metadata:
+    date: 2023-09-27
     kedro-viz:
       layer: raw
 
@@ -34,9 +35,17 @@ charging_sessions_raw:
       layer: raw
 
 # Intermediate datasets
-"{dataset}_preprocessed":
+"{dataset}_typed":
   type: pandas.ParquetDataset
-  filepath: data/02_intermediate/{dataset}_preprocessed.parquet
+  filepath: data/02_intermediate/{dataset}_typed.parquet
   metadata:
     kedro-viz:
       layer: intermediate
+
+# Primary datasets
+stations_primary:
+  type: pandas.ParquetDataset
+  filepath: data/03_primary/stations.parquet
+  metadata:
+    kedro-viz:
+      layer: primary
