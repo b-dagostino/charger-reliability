@@ -29,4 +29,4 @@ def find_unique_stations(*inputs: list[pd.DataFrame]) -> pd.DataFrame:
         .reset_index(drop=True)
     )
 
-    return unique_stations
+    return unique_stations.astype("category")

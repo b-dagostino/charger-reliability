@@ -19,7 +19,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                     "alarms_typed",
                     "charging_sessions_typed",
                 ],
-                outputs="stations_primary",
+                outputs="unique_stations",
                 name="find_unique_stations",
             )
         ]

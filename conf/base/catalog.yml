@@ -49,3 +49,46 @@ unique_stations:
   metadata:
     kedro-viz:
       layer: primary
+
+#
+charger_states:
+  type: pandas.ParquetDataset
+  filepath: data/07_model_output/charger_states.parquet
+  metadata:
+    kedro-viz:
+      layer: model_output
+
+# charger_history:
+#   type: pandas.GenericDataset
+#   file_format: pickle
+#   filepath: data/07_model_output/charger_history.pkl
+#   metadata:
+#     kedro-viz:
+#       layer: model_output
+
+state_summary:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/state_summary.csv
+  save_args:
+    index: True
+  metadata:
+    kedro-viz:
+      layer: model_output
+
+state_summary_normalized:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/state_summary_normalized.csv
+  save_args:
+    index: True
+  metadata:
+    kedro-viz:
+      layer: model_output
+
+state_correlation:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/state_correlation.csv
+  save_args:
+    index: True
+  metadata:
+    kedro-viz:
+      layer: model_output
